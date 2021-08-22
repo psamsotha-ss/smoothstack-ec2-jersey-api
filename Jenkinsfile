@@ -10,13 +10,18 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh './mvnw test'
+                sh './mvnw clean test'
                 junit 'target/surefire-reports/*.xml'
+            }
+        }
+        stage('Code Quality') {
+            steps {
+                sh './mvnw validate'
             }
         }
         stage('Build') {
             steps {
-                sh './mvnw clean package -DskipTests'
+                sh './mvnw package -DskipTests'
             }
             post {
                 success {
