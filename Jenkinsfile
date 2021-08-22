@@ -31,8 +31,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withAWS(profile: 'smoothstack', region: 'us-west-2') {
-                    s3Upload(profile: 'smoothstack', bucket: 'psamsotha-smoothstack', file: 'target/smoothstack-ec2-jersey-api.jar',
+                withAWS(region: 'us-west-2', credentials: 'SmoothstackAws') {
+                    s3Upload(bucket: 'psamsotha-smoothstack', file: 'target/smoothstack-ec2-jersey-api.jar',
                             path: 'devops-training/smoothstack-ec2-jersey-api.jar')
                 }
             }
