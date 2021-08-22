@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/psamsotha-ss/smoothstack-ec2-jersey-api.git'
+                git url: 'https://github.com/psamsotha-ss/smoothstack-ec2-jersey-api.git', branch: 'main'
             }
         }
         stage('Test') {
