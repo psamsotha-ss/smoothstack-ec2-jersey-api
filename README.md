@@ -3,7 +3,6 @@
 This project is to be deployed to an EC2 instance. The CI/CD will be handled by Jenkins.
 Jenkins and SonarQube should be run on the same instance. After pushing to GitHub, a webhook should trigger a build on Jenkins, and the app should then be deployed.
 
-
 ## CI/CD Steps
 
 The CI steps are as follows:
@@ -22,6 +21,8 @@ The CD steps are as follows:
    
 
 ## CI/CD Setup
+
+### Create EC2 Instance
 
 Everything will be run on an Amazon Linux 2 instance.
 
@@ -43,12 +44,24 @@ docker pull sonarqube
 docker run -d --net jenkins-sonar --name sonarqube -p 9000:9000 sonarqube
 ```
 
-### Jenkins
+#### Security Group
+
+* Add TCP port 8080 inbound rule for Jenkins access
+* Add TCP port 9000 inbound rule for SonarQube access
+* Add TCP port 8080 inbound rule. The API server is listening on port 8000
+
+### Setup Jenkins
 
 1. Go to `<ec2-domain>:8080`
 2. Check docker logs `docker logs jenkins` and get the password to set up Jenkins
 3. Run Jenkins set up and create a user
 4. Add the "Pipeline: AWS Steps" plugin
+
+### Setup SonarQube
+
+1. Go to `<ec2-domain>:9000`
+2. Use username `admin` and password `admin`
+3. Create a new password
 
 ## Jenkins Pipeline
 
@@ -66,11 +79,13 @@ docker run -d --net jenkins-sonar --name sonarqube -p 9000:9000 sonarqube
    name of the token and `JENKINS_URL` with the URL of Jenkins
 10. Test by making a commit.
 
-## Create EC2 Instance
+### Setup SonarQube project
 
-### Security Group
+1. Create a new project manually
+2. Select "Locally" when asked how to analyze repository
+3. Create a token to pass to Jenkins
+4. Use the token to pass to the Maven SonarQube plugin (in Jenkinsfile)
 
-* Add TCP port 8080 inbound rule. The server is listening on port 8000
 
 ## Access API
 

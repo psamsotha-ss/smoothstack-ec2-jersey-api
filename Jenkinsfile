@@ -24,11 +24,6 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
             }
         }
-//        stage('Code Quality') {
-//            steps {
-//                sh './mvnw validate'
-//            }
-//        }
         stage('Build') {
             steps {
                 sh './mvnw package -DskipTests'
