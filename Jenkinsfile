@@ -1,7 +1,6 @@
 #!/usr/bin/groovy
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
@@ -9,11 +8,14 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
+            environment {
+                SONARQUBE_TOKEN = credentials('sonarqube-token')
+            }
             steps {
                 sh "./mvnw sonar:sonar \\\n" +
                         "  -Dsonar.projectKey=jersey-api \\\n" +
                         "  -Dsonar.host.url=http://sonarqube:9000 \\\n" +
-                        "  -Dsonar.login=54b885fa30a681c51ebc2f155d014f8745d730c9"
+                        "  -Dsonar.login=${SONARQUBE_TOKEN}"
             }
         }
         stage('Test') {
