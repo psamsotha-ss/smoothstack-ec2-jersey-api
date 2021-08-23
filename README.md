@@ -1,7 +1,7 @@
 # Smoothstack AWS EC2 API
 
 This project is to be deployed to an EC2 instance. The CI/CD will be handled by Jenkins.
-Jenkins and SonarCube should be run in the instance.
+Jenkins and SonarQube should be run on the same instance. After pushing to GitHub, a webhook should trigger a build on Jenkins, and the app should then be deployed.
 
 
 ## CI/CD Steps
