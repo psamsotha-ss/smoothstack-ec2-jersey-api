@@ -10,7 +10,10 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                sh "./mvnw sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=0f83c190c27a3342ab9cfd5e7526c8cb14eebc6b"
+                sh "./mvnw sonar:sonar \\\n" +
+                        "  -Dsonar.projectKey=jersey-api \\\n" +
+                        "  -Dsonar.host.url=http://sonarqube:9000 \\\n" +
+                        "  -Dsonar.login=54b885fa30a681c51ebc2f155d014f8745d730c9"
             }
         }
         stage('Test') {
