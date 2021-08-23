@@ -8,17 +8,22 @@ pipeline {
                 git url: 'https://github.com/psamsotha-ss/smoothstack-ec2-jersey-api.git', branch: 'main'
             }
         }
+        stage('SonarQube Analysis') {
+            withSonarQubeEnv() {
+                sh "./mvnw sonar:sonar"
+            }
+        }
         stage('Test') {
             steps {
                 sh './mvnw clean test'
                 junit 'target/surefire-reports/*.xml'
             }
         }
-        stage('Code Quality') {
-            steps {
-                sh './mvnw validate'
-            }
-        }
+//        stage('Code Quality') {
+//            steps {
+//                sh './mvnw validate'
+//            }
+//        }
         stage('Build') {
             steps {
                 sh './mvnw package -DskipTests'
