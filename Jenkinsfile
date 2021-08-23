@@ -10,7 +10,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                sh "./mvnw sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=0f83c190c27a3342ab9cfd5e7526c8cb14eebc6b"
+                sh "./mvnw sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=0f83c190c27a3342ab9cfd5e7526c8cb14eebc6b"
             }
         }
         stage('Test') {
