@@ -9,8 +9,10 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
-            withSonarQubeEnv() {
-                sh "./mvnw sonar:sonar"
+            steps {
+                withSonarQubeEnv() {
+                    sh "./mvnw sonar:sonar"
+                }
             }
         }
         stage('Test') {
