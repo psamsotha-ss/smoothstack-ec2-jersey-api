@@ -52,7 +52,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'java -jar /var/jenkins_home/app/smoothstack-ec2-jersey-api.jar &'
+                sh 'nohup java -jar /var/jenkins_home/app/smoothstack-ec2-jersey-api.jar &'
             }
         }
     }
