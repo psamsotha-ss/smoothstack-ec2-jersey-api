@@ -52,7 +52,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'BUILD_ID=dontKillMe nohup java -jar /var/jenkins_home/app/smoothstack-ec2-jersey-api.jar &'
+                withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
+                    sh 'nohup java -jar /var/jenkins_home/app/smoothstack-ec2-jersey-api.jar &'
+                }
             }
         }
     }
