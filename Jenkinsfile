@@ -45,8 +45,8 @@ pipeline {
         stage('Pull Archive') {
             steps {
                 withAWS(region: 'us-west-2', credentials: 'SmoothstackAws') {
-                    s3Download(bucket: 'psamsotha-smoothstack', file: 'devops-training/smoothstack-ec2-jersey-api.jar',
-                            path: '/home/smoothstack-ec2-jersey-api.jar', force: true)
+                    s3Download(bucket: 'psamsotha-smoothstack', file: '/home/smoothstack-ec2-jersey-api.jar',
+                            path: 'devops-training/smoothstack-ec2-jersey-api.jar', force: true)
                 }
             }
         }
