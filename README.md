@@ -39,7 +39,9 @@ service docker start
 usermod -a -G docker ec2-user
 docker network create jenkins-sonar
 docker pull jenkins/jenkins:lts-jdk11
-docker run -d --net jenkins-sonar -v jenkins_home:/var/jenkins_home -p 8080:8080 -p 50000:50000 --name jenkins jenkins/jenkins:lts-jdk11
+docker run -d --net jenkins-sonar -v jenkins_home:/var/jenkins_home \
+       -p 8080:8080 -p 50000:50000 -p 8000:8000 --name jenkins \
+       jenkins/jenkins:lts-jdk11
 docker pull sonarqube
 docker run -d --net jenkins-sonar --name sonarqube -p 9000:9000 sonarqube
 ```
@@ -71,20 +73,18 @@ docker run -d --net jenkins-sonar --name sonarqube -p 9000:9000 sonarqube
 2. In the left sidebar, click Configure
 3. Add a new API token and give it a name like `github-webhook`
 4. Copy the token
-5. Create a pipeline and select "Trigger build remotely" from Built Triggers
-6. Paste the copied token
-7. Copy the URL below the input
-8. Go to the project on GitHub and go to Settings and Webhooks
-9. Create a new webhook and paste the URL replacing the `TOKEN_NAME` with the
-   name of the token and `JENKINS_URL` with the URL of Jenkins
-10. Test by making a commit.
+5. Go to the project on GitHub and go to Settings and Webhooks
+6. Create a new webhook and user the URL `<jenkins-url>/github-webhook/`
+7. Paste the copied token into the "Secret" field
+8. In Jenkins, create a pipeline and select "GitHub hook trigger for GITScm polling" from Build Triggers
+9. Test by making a commit. (Note: the pipeline must be first ran manually once before a commit will trigger it)
 
 ### Setup SonarQube project
 
 1. Create a new project manually
 2. Select "Locally" when asked how to analyze repository
 3. Create a token to pass to Jenkins
-4. Use the token to pass to the Maven SonarQube plugin (in Jenkinsfile)
+4. In Jenkins, go to Manage Jenkins -> Manage credentials and create a new secret to use as an environment variable (See Jenkinsfile for usage)
 
 
 ## Access API

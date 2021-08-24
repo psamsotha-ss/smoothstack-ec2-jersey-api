@@ -52,6 +52,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                // envar required for spawning background process
                 withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
                     sh 'nohup java -jar /var/jenkins_home/app/smoothstack-ec2-jersey-api.jar &'
                 }
